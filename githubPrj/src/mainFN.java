@@ -1,5 +1,47 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+
+class basicElements_Enc {
+	String plaintext;
+	int len1 = plaintext.length();
+	char text1[] = plaintext.toCharArray();
+	char reformedText1[] = new char[len1];
+	int index1 = 0;
+}
+
+class basicElements_Dec {
+	String ciphertext;
+	int len2 = ciphertext.length();
+	char text2[] = ciphertext.toCharArray();
+	char reformedText2[] = new char[len2];
+	int index2 = 0;
+}
+
+class shiftCipher_Enc extends basicElements_Enc {
+	Scanner scanner = new Scanner(System.in);
+	for(int a = 0; a < len; a++) {
+		System.out.print(reformedText1[a]);
+	}
+	
+	System.out.println();
+	System.out.println("Which integer do you want to use as a key?");
+	System.out.print(">> ");
+	int key = scanner.nextInt();
+	
+	System.out.println("The result of Encryption");
+	System.out.print(">> ");
+	for(int b = 0; b < len; b++) {
+		if(Character.isLetter(reformedText1[b])) {
+			reformedText1[b] = (char)(((int)reformedText1[b] + key - 65) % 26 + 65);
+		}
+	}
+	for(int c = 0; c < len; c++) {
+		System.out.print(reformedText1[c]);
+	}
+}
+
+class shiftCipher_Dec extends basicElements_Dec {
+	
+}
 
 public class mainFN {
 	public static void main(String[] args) {
@@ -21,9 +63,11 @@ public class mainFN {
 				int entercode = scanner.nextInt();
 				if(entercode == 1)
 				{
+					
 				}
-				if(entercode == 2)
+				else if(entercode == 2)
 				{
+					
 				}
 				else if(entercode != 1 && entercode !=2 && entercode>=0)
 				{
@@ -44,3 +88,4 @@ public class mainFN {
 		scanner.close();
 	}
 }
+
