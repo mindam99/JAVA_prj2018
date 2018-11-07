@@ -208,7 +208,7 @@ public class mainFN {
 		}
 	}
 	public static void Sub_Dec() {
-		
+		Scanner scanner = new Scanner(System.in);
 	}
 }
 
