@@ -74,6 +74,7 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 2:
+						Sub_Dec();
 						System.out.println();
 						break;
 					case 3:
@@ -196,19 +197,55 @@ public class mainFN {
 		}
 
 		System.out.println("You need to make your own S-box.");
+		System.out.println("S-box is an ordered pair of alphabets for your encryption.");
 		System.out.println("Enter random alphabet string for your substitution.");
 		char[] Sbox = scanner.nextLine().toUpperCase().toCharArray();
 
-		for(int i = 0; i < len; i++) {
+		for(int i = 0; i < index; i++) {
 			reformedText[i] = Sbox[(int)reformedText[i] - 65];
 		}
 
-		for(int i = 0; i < len; i++) {
+		for(int i = 0; i < index; i++) {
 			System.out.print(reformedText[i]);
 		}
 	}
 	public static void Sub_Dec() {
+		System.out.println("This function does not support complete decryption.\nIt will give you a guide for easier problem solving.");
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Which words / sentences do you want to decrypt?");
+		System.out.println(">> ");
+
+		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
+		int len = ciphertext.length;
+		char[] reformedText = new char[len];
+		int [] alphabet = new int[26];
+		
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)ciphertext[i] && (int)ciphertext[i] <= 90) {
+				reformedText[index] = ciphertext[i];
+				index++;
+			}
+		}
+
+		for(int i = 0; i < len; i++) {
+			alphabet[(int)reformedText[i] - 'A']++;
+		}
+
+		for(int i = 0; i < alphabet.length; i ++) {
+			System.out.print(alphabet[i] + " ");
+		}
+		/*
+		for(int i = 0; i < sentence.length(); i ++)
+		{
+			alphabet[sentence.charAt(i) - 'A'] ++;
+		}
+
+		for(int i = 0; i < alphabet.length; i ++)
+		{
+			System.out.print(alphabet[i] + " ");
+		}
+		*/
 	}
 }
 
