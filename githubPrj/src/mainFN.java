@@ -42,6 +42,7 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 3:
+						Vig_Enc();
 						System.out.println();
 						break;
 					case 4:
@@ -201,11 +202,11 @@ public class mainFN {
 		System.out.println("Enter random alphabet string for your substitution.");
 		char[] Sbox = scanner.nextLine().toUpperCase().toCharArray();
 
-		for(int i = 0; i < index; i++) {
+		for(int i = 0; i < index; i++) { // len -> index
 			reformedText[i] = Sbox[(int)reformedText[i] - 65];
 		}
 
-		for(int i = 0; i < index; i++) {
+		for(int i = 0; i < index; i++) { // len -> index
 			System.out.print(reformedText[i]);
 		}
 	}
@@ -246,6 +247,46 @@ public class mainFN {
 			System.out.print(alphabet[i] + " ");
 		}
 		*/
+	}
+	public static void Vig_Enc() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Which words / sentences do you want to encrypt?");
+		System.out.print(">> ");
+
+		String plaintext = scanner.nextLine();
+		plaintext = plaintext.toUpperCase();
+		int len = plaintext.length();
+		char text[] = plaintext.toCharArray();
+		char reformedText[] = new char[len];
+		
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)text[i] && (int)text[i] <= 90) {
+				reformedText[index] = text[i];
+				index++;
+			}
+		}
+		
+		System.out.println("Which word do you want to use as a key?");
+		System.out.println("'ANT' is a proper example for your key.");
+		System.out.print(">> ");
+		char[] keyword = scanner.nextLine().toUpperCase().toCharArray();
+		int keysize = keyword.length;
+		int[] keyarr = new int[keyword.length];
+		
+		for(int i = 0; i < keyarr.length; i++) {
+			keyarr[i] = (int) keyword[i] - 'A';
+		}
+		
+		for(int i = 0; i < index; i++) {
+			int shift = keyarr[i % keyarr.length];
+			reformedText[i] = (char) (((int) reformedText[i] - 'A' + shift) % 26 + 'A');
+		}
+		
+		for(int i = 0; i < index; i++) {
+			System.out.print(reformedText[i]);
+		}
+		System.out.println();
 	}
 }
 
