@@ -46,6 +46,7 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 4:
+						Trans_Enc();
 						System.out.println();
 						break;
 					case 5:
@@ -288,5 +289,88 @@ public class mainFN {
 		}
 		System.out.println();
 	}
-}
+	
+	public static void Trans_Enc() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Which words / sentences do you want to encrypt?");
+		System.out.print(">> ");
 
+		String plaintext = scanner.nextLine();
+		plaintext = plaintext.toUpperCase();
+		int len = plaintext.length();
+		char text[] = plaintext.toCharArray();
+		char reformedText[] = new char[len / 5 * 5 + (len % 5 == 0 ? 0 : 5)];
+
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)text[i] && (int)text[i] <= 90) {
+				reformedText[index] = text[i];
+				index++;
+			}
+		}
+
+		switch(index % 5) {
+		case 1:
+			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 2] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 3] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			index += 4;
+			break;
+		case 2:
+			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 2] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			index += 3;
+			break;
+		case 3:
+			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			index += 2;
+			break;
+		case 4:
+			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
+			index += 1;
+			break;
+		default:
+			break;
+		}
+
+		int trans[];
+		trans = new int [5];
+		System.out.println("Decide the order of five characters.");
+		System.out.println("Integers 1 to 5 will be appropriate inputs.");
+		System.out.print("1 2 3 4 5 will be shifted as... >> ");
+		for(int i = 0; i < 5; i++) {
+			trans[i] = scanner.nextInt();
+		}
+
+		int pairs;
+		if(index % 5 == 0) {
+			pairs = index / 5;
+		}
+		else {
+			pairs = (index / 5) + 1;
+		}
+
+		char charArray[][] = new char [pairs][5];
+
+		int mark = 0;
+		for(int i = 0; i < pairs; i++) {
+			for(int j = 0; j < 5; j++) {
+				charArray[i][j] = reformedText[mark + j];
+			}
+			mark += 5;
+		}
+		
+		System.out.println("\nThe result is...");
+		for(int i = 0; i < pairs; i++) {
+			System.out.print(charArray[i][trans[0]-1]);
+			System.out.print(charArray[i][trans[1]-1]);
+			System.out.print(charArray[i][trans[2]-1]);
+			System.out.print(charArray[i][trans[3]-1]);
+			System.out.print(charArray[i][trans[4]-1]);
+		}
+		System.out.println();
+	}
+}
