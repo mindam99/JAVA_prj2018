@@ -77,7 +77,7 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 2:
-						Sub_Dec();
+						Sub_DecHelper();
 						System.out.println();
 						break;
 					case 3:
@@ -212,11 +212,30 @@ public class mainFN {
 			System.out.print(reformedText[i]);
 		}
 	}
-	public static void Sub_Dec() {
+	public static void Sub_DecHelper() {
 		System.out.println("This function does not support complete decryption.\nIt will give you a guide for easier problem solving.");
 		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("\n<Table of Frequency of Alphabet Appearance>");
+		System.out.println("E(12.7%)");
+		System.out.println("T(9.1%) / A(8.2%) / O(7.5%) / I(7.0%) / N(6.7%) / S(6.3%) / H(6.1%) / R(6.0%)");
+		System.out.println("D(4.3%) / L(4.0%)");
+		System.out.println("C(2.8%) / U(2.8%) / M(2.4%) / W(2.3%) / F(2.2%) / G(2.0%) / Y(2.0%)");
+		System.out.println("P(1.9%) / B(1.5%) / V(1.0%)");
+		System.out.println("K(0.08%) / J(0.02%) / Q(0.01%) / X(0.01%) / Z(0.01%)");
+		
+		System.out.println("\n<Table of Freuquent Digrams & Trigrams>");
+		System.out.println("Use digrams and trigrams for easier decryption.");
+		System.out.println("Digram───────────────────────────────────────────────────────┐");
+		System.out.println("| TH, HE, IN, ER, AN, RE, ED, ON, ES, ST, EN, AT, TO, NT, HA |");
+		System.out.println("| ND, OU, EA, NG, AS, OR, TI, IS, ET, IT, AR, TE, SE, HI, OF |");
+		System.out.println("└────────────────────────────────────────────────────────────┘");
+		System.out.println("\nTrigram──────────────────────────────────────────────────────┐");
+		System.out.println("| THE, ING, AND, HER, ERE, ENT, THA, NTH, WAS, ETH, FOR, DTH |");
+		System.out.println("└────────────────────────────────────────────────────────────┘");
+		
 		System.out.println("Which words / sentences do you want to decrypt?");
-		System.out.println(">> ");
+		System.out.print(">> ");
 
 		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
 		int len = ciphertext.length;
@@ -230,25 +249,27 @@ public class mainFN {
 				index++;
 			}
 		}
-
-		for(int i = 0; i < len; i++) {
-			alphabet[(int)reformedText[i] - 'A']++;
-		}
-
-		for(int i = 0; i < alphabet.length; i ++) {
-			System.out.print(alphabet[i] + " ");
-		}
-		/*
-		for(int i = 0; i < sentence.length(); i ++)
+		
+		for(int i = 0; i < len; i++)
 		{
-			alphabet[sentence.charAt(i) - 'A'] ++;
+			alphabet[(int)reformedText[i] - 'A']++;
 		}
 
 		for(int i = 0; i < alphabet.length; i ++)
 		{
-			System.out.print(alphabet[i] + " ");
+			System.out.print((char)(65 + i) + " = " + alphabet[i] + " ");
+			System.out.println();
 		}
-		*/
+		
+		int max = alphabet[0];
+		int j = 0;
+		for(int i = 0; i < 26; i++) {
+			if(alphabet[i] >= max) {
+				max = alphabet[i];
+				j = i;
+			}
+		}
+		System.out.println((char)(65 + j) + " is likely to be E.");
 	}
 	public static void Vig_Enc() {
 		Scanner scanner = new Scanner(System.in);
