@@ -257,7 +257,7 @@ public class mainFN {
 
 		for(int i = 0; i < alphabet.length; i ++)
 		{
-			System.out.print((char)(65 + i) + " = " + alphabet[i] + " ");
+			System.out.print((char)(65 + i) + " = " + alphabet[i] + " appearance(s)");
 			System.out.println();
 		}
 		
@@ -270,6 +270,43 @@ public class mainFN {
 			}
 		}
 		System.out.println((char)(65 + j) + " is likely to be E.");
+		
+		int first, second, third, fourth, fifth, sixth, seventh, eighth, ninth;
+		first = second = third = fourth = fifth = sixth = seventh = eighth = ninth = 0;
+		
+		for(int i = 0; i < 26; i++) {
+			if(alphabet[i] > first) {
+				second = first;
+				first = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first) {
+				second = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second) {
+				third = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third) {
+				fourth = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth) {
+				fifth = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth) {
+				sixth = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth) {
+				seventh = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth && alphabet[i] != seventh) {
+				eighth = alphabet[i];
+			}
+			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth && alphabet[i] != seventh && alphabet[i] != eighth) {
+				ninth = alphabet[i];
+			}
+		}
+		
+		System.out.println(second +" "+ third +" "+ fourth +" "+ fifth +" "+ sixth +" "+ seventh +" "+ eighth +" "+ ninth);
+		
 	}
 	public static void Vig_Enc() {
 		Scanner scanner = new Scanner(System.in);
