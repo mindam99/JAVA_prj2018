@@ -297,7 +297,7 @@ public class mainFN {
 		}
 		System.out.println("These characters are likely to be secondly frequent alphabets according to statistical characteristics from normal plaintexts.");
 		System.out.println("Thus, they are likely to be T, A, O, I, N, S, H, R.");
-		System.out.println("During decryption, try to find vowels first.\n");
+		System.out.println("During decryption, try to find vowels first and utilize digrams and trigrams actively.\n");
 		System.out.println("If " + alphabet[0].c + " is not E, try other cases. In ordinary circumstances, one of the characters in secondly frequent characters' group is highly probable to be E.");
 		System.out.println("(Try at least " + alphabet[1].c + ", " + alphabet[2].c + ", " + alphabet[3].c + ", " + alphabet[4].c + ", " + alphabet[5].c + ", " + alphabet[6].c + ", " + alphabet[7].c + ", and " + alphabet[8].c + ".)");
 	}
