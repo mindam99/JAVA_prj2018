@@ -240,7 +240,16 @@ public class mainFN {
 		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
 		int len = ciphertext.length;
 		char[] reformedText = new char[len];
-		int [] alphabet = new int[26];
+		class Alpha {
+			int v;
+			char c;
+		};
+		Alpha[] alphabet = new Alpha[26];
+		for(int i = 0; i < 26; i++) {
+			alphabet[i] = new Alpha();
+			alphabet[i].v = 0;
+			alphabet[i].c = (char) ('A' + i);
+		}
 		
 		int index = 0;
 		for(int i = 0; i < len; i++) {
@@ -252,61 +261,45 @@ public class mainFN {
 		
 		for(int i = 0; i < len; i++)
 		{
-			alphabet[(int)reformedText[i] - 'A']++;
+			alphabet[(int)reformedText[i] - 'A'].v++;
 		}
+		
+		Arrays.sort(alphabet, new Comparator<Alpha>() {
+			public int compare(Alpha x, Alpha y) {
+				if(x.v < y.v) return 1;
+				else if(x.v > y.v) return -1;
+				else return 0;
+			}
+		});
+		
+		Arrays.sort(alphabet, new Comparator<Alpha>() {
+			public int compare(Alpha x, Alpha y) {
+				if(x.v < y.v) return 1;
+				else if(x.v > y.v) return -1;
+				else return 0;
+			}
+		});
 
 		for(int i = 0; i < alphabet.length; i ++)
 		{
-			System.out.print((char)(65 + i) + " = " + alphabet[i] + " appearance(s)");
+			System.out.print(alphabet[i].c + " = " + alphabet[i].v + " appearance(s)");
 			System.out.println();
 		}
-		
-		int max = alphabet[0];
-		int j = 0;
-		for(int i = 0; i < 26; i++) {
-			if(alphabet[i] >= max) {
-				max = alphabet[i];
-				j = i;
+
+		System.out.println(alphabet[0].c + " is likely to be E.");
+		for(int i = 1; i < 9; i++) {
+			if(i < 8) {
+				System.out.print(alphabet[i].c + ", ");
+			}
+			else if(i == 8) {
+				System.out.print(alphabet[i].c + ". ");
 			}
 		}
-		System.out.println((char)(65 + j) + " is likely to be E.");
-		
-		int first, second, third, fourth, fifth, sixth, seventh, eighth, ninth;
-		first = second = third = fourth = fifth = sixth = seventh = eighth = ninth = 0;
-		
-		for(int i = 0; i < 26; i++) {
-			if(alphabet[i] > first) {
-				second = first;
-				first = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first) {
-				second = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second) {
-				third = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third) {
-				fourth = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth) {
-				fifth = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth) {
-				sixth = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth) {
-				seventh = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth && alphabet[i] != seventh) {
-				eighth = alphabet[i];
-			}
-			else if(alphabet[i] > second && alphabet[i] != first && alphabet[i] != second && alphabet[i] != third && alphabet[i] != fourth && alphabet[i] != fifth && alphabet[i] != sixth && alphabet[i] != seventh && alphabet[i] != eighth) {
-				ninth = alphabet[i];
-			}
-		}
-		
-		System.out.println(second +" "+ third +" "+ fourth +" "+ fifth +" "+ sixth +" "+ seventh +" "+ eighth +" "+ ninth);
-		
+		System.out.println("These characters are likely to be secondly frequent alphabets according to statistical characteristics from normal plaintexts.");
+		System.out.println("Thus, they are likely to be T, A, O, I, N, S, H, R.");
+		System.out.println("During decryption, try to find vowels first.\n");
+		System.out.println("If " + alphabet[0].c + " is not E, try other cases. In ordinary circumstances, one of the characters in secondly frequent characters' group is highly probable to be E.");
+		System.out.println("(Try at least " + alphabet[1].c + ", " + alphabet[2].c + ", " + alphabet[3].c + ", " + alphabet[4].c + ", " + alphabet[5].c + ", " + alphabet[6].c + ", " + alphabet[7].c + ", and " + alphabet[8].c + ".)");
 	}
 	public static void Vig_Enc() {
 		Scanner scanner = new Scanner(System.in);
