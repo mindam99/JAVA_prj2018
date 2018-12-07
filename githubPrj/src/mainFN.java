@@ -65,7 +65,7 @@ public class mainFN {
 					System.out.println("1. Shift Cipher (Caesar Cipher)");
 					System.out.println("2. Substitution Cipher");
 					System.out.println("3. Vigenere Cipher");
-					System.out.println("4. Transposition Cipher");
+					System.out.println("4. Transposition Cipher (key cycle = 5)");
 					System.out.println();
 					
 					System.out.print(">> ");
@@ -81,9 +81,11 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 3:
+						Vig_DecHelper();
 						System.out.println();
 						break;
 					case 4:
+						Trans_Dec();
 						System.out.println();
 						break;
 					default:
@@ -109,7 +111,7 @@ public class mainFN {
 		System.out.println("Thank you for using this program.");
 		scanner.close();
 	}
-	
+
 	public static void Shift_Enc() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Which words / sentences do you want to encrypt?");
@@ -128,12 +130,12 @@ public class mainFN {
 				index++;
 			}
 		}
-		
+
 		System.out.println();
 		System.out.println("Which integer do you want to use as a key?");
 		System.out.print(">> ");
 		int key = scanner.nextInt();
-		
+
 		System.out.println("The result of Encryption");
 		System.out.print(">> ");
 		for(int i = 0; i < len; i++) {
@@ -150,13 +152,13 @@ public class mainFN {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Which words / sentences do you want to decrypt?");
 		System.out.print(">> ");
-		
+
 		String ciphertext = scanner.nextLine();
 		ciphertext = ciphertext.toUpperCase();
 		int len = ciphertext.length();
 		char text[] = ciphertext.toCharArray();
 		char reformedText[] = new char[len];
-		
+
 		int index = 0;
 		for(int i = 0; i < len; i++) {
 			if(65 <= (int)text[i] && (int)text[i] <= 90) {
@@ -164,10 +166,10 @@ public class mainFN {
 				index++;
 			}
 		}
-		
+
 		System.out.println();
 		System.out.println("The result of Exhaustive Search: ");
-		
+
 		for(int i = 1; i < 26; i++) {
 			for(int j = 0; j < len; j++) {
 				if(Character.isLetter(reformedText[j])) {
@@ -215,7 +217,7 @@ public class mainFN {
 	public static void Sub_DecHelper() {
 		System.out.println("This function does not support complete decryption.\nIt will give you a guide for easier problem solving.");
 		Scanner scanner = new Scanner(System.in);
-		
+
 		System.out.println("\n<Table of Frequency of Alphabet Appearance>");
 		System.out.println("E(12.7%)");
 		System.out.println("T(9.1%) / A(8.2%) / O(7.5%) / I(7.0%) / N(6.7%) / S(6.3%) / H(6.1%) / R(6.0%)");
@@ -223,7 +225,7 @@ public class mainFN {
 		System.out.println("C(2.8%) / U(2.8%) / M(2.4%) / W(2.3%) / F(2.2%) / G(2.0%) / Y(2.0%)");
 		System.out.println("P(1.9%) / B(1.5%) / V(1.0%)");
 		System.out.println("K(0.08%) / J(0.02%) / Q(0.01%) / X(0.01%) / Z(0.01%)");
-		
+
 		System.out.println("\n<Table of Freuquent Digrams & Trigrams>");
 		System.out.println("Use digrams and trigrams for easier decryption.");
 		System.out.println("Digram───────────────────────────────────────────────────────┐");
@@ -233,7 +235,7 @@ public class mainFN {
 		System.out.println("\nTrigram──────────────────────────────────────────────────────┐");
 		System.out.println("| THE, ING, AND, HER, ERE, ENT, THA, NTH, WAS, ETH, FOR, DTH |");
 		System.out.println("└────────────────────────────────────────────────────────────┘");
-		
+
 		System.out.println("Which words / sentences do you want to decrypt?");
 		System.out.print(">> ");
 
@@ -250,7 +252,7 @@ public class mainFN {
 			alphabet[i].v = 0;
 			alphabet[i].c = (char) ('A' + i);
 		}
-		
+
 		int index = 0;
 		for(int i = 0; i < len; i++) {
 			if(65 <= (int)ciphertext[i] && (int)ciphertext[i] <= 90) {
@@ -258,12 +260,12 @@ public class mainFN {
 				index++;
 			}
 		}
-		
+
 		for(int i = 0; i < len; i++)
 		{
 			alphabet[(int)reformedText[i] - 'A'].v++;
 		}
-		
+
 		Arrays.sort(alphabet, new Comparator<Alpha>() {
 			public int compare(Alpha x, Alpha y) {
 				if(x.v < y.v) return 1;
@@ -271,7 +273,7 @@ public class mainFN {
 				else return 0;
 			}
 		});
-		
+
 		Arrays.sort(alphabet, new Comparator<Alpha>() {
 			public int compare(Alpha x, Alpha y) {
 				if(x.v < y.v) return 1;
@@ -311,7 +313,7 @@ public class mainFN {
 		int len = plaintext.length();
 		char text[] = plaintext.toCharArray();
 		char reformedText[] = new char[len];
-		
+
 		int index = 0;
 		for(int i = 0; i < len; i++) {
 			if(65 <= (int)text[i] && (int)text[i] <= 90) {
@@ -319,29 +321,53 @@ public class mainFN {
 				index++;
 			}
 		}
-		
+
 		System.out.println("Which word do you want to use as a key?");
 		System.out.println("'ANT' is a proper example for your key.");
 		System.out.print(">> ");
 		char[] keyword = scanner.nextLine().toUpperCase().toCharArray();
 		int keysize = keyword.length;
 		int[] keyarr = new int[keyword.length];
-		
+
 		for(int i = 0; i < keyarr.length; i++) {
 			keyarr[i] = (int) keyword[i] - 'A';
 		}
-		
+
 		for(int i = 0; i < index; i++) {
 			int shift = keyarr[i % keyarr.length];
 			reformedText[i] = (char) (((int) reformedText[i] - 'A' + shift) % 26 + 'A');
 		}
-		
+
 		for(int i = 0; i < index; i++) {
 			System.out.print(reformedText[i]);
 		}
 		System.out.println();
 	}
-	
+	public static void Vig_DecHelper() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Input charaters");
+
+		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
+		int len = ciphertext.length;
+		char[] reformedText = new char[len];
+		int [] alphabet = new int[26];
+
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)ciphertext[i] && (int)ciphertext[i] <= 90) {
+				reformedText[index] = ciphertext[i];
+				index++;
+			}
+		}
+
+		System.out.println("Please input a possible integer for key length.");
+		System.out.print(">> ");
+		int keylen = scanner.nextInt();
+
+		char charArray[][] = new char [keylen][];
+		
+		
+	}
 	public static void Trans_Enc() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Which words / sentences do you want to encrypt?");
@@ -414,7 +440,7 @@ public class mainFN {
 			}
 			mark += 5;
 		}
-		
+
 		System.out.println("\nThe result is...");
 		for(int i = 0; i < pairs; i++) {
 			System.out.print(charArray[i][trans[0]-1]);
@@ -424,6 +450,99 @@ public class mainFN {
 			System.out.print(charArray[i][trans[4]-1]);
 		}
 		System.out.println();
+	}
+	public static void Trans_Dec() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Input charaters");
+
+		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
+		int len = ciphertext.length;
+		char[] reformedText = new char[len];
+		int [] alphabet = new int[26];
+
+		class Perm {
+			int[][] perm;
+			int perm_pos;
+			int[] input;
+
+			Perm(int[] input) {
+				perm = new int[120][];
+				perm_pos = 0;
+				this.input = input;
+			}
+
+			int[] get_permutation(int n) {
+				return perm[n];
+			}
+
+			void permute() {
+				permute(0);
+			}
+
+			void permute(int start) {
+				if(start == input.length) {
+					perm[perm_pos] = new int[start];
+					for(int i = 0; i < start; i++) {
+						perm[perm_pos][i] = input[i];
+					}
+					perm_pos++;
+				}
+				else {
+					for(int i = start; i < input.length; i++) {
+						int tmp = input[i];
+						input[i] = input[start];
+						input[start] = tmp;
+
+						permute(start + 1);
+
+						tmp = input[i];
+						input[i] = input[start];
+						input[start] = tmp;
+					}
+				}
+			}
+		}
+
+		int[] tarr = new int[5];
+		for(int i = 0; i < 5; i++)
+			tarr[i] = i;
+		Perm perm = new Perm(tarr);
+		perm.permute();
+
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)ciphertext[i] && (int)ciphertext[i] <= 90) {
+				reformedText[index] = ciphertext[i];
+				index++;
+			}
+		}
+
+		int pairs;
+		pairs = index / 5;
+
+		char charArray[][] = new char [pairs][5];
+
+
+		int mark = 0;
+		for(int i = 0; i < pairs; i++) {
+			for(int j = 0; j < 5; j++) {
+				charArray[i][j] = reformedText[mark + j];
+			}
+			mark += 5;
+		}
+
+		for(int k = 0; k < 120; k++) {
+			int trans[];
+			trans = perm.get_permutation(k);
+			mark = 0;
+			for(int i = 0; i < pairs; i++) {
+				for(int j = 0; j < 5; j++) {
+					System.out.print(charArray[i][trans[j]]);
+				}
+
+			}
+			System.out.println();
+		}
 	}
 	public static void BlockSPN_Enc() {
 		Scanner scanner = new Scanner(System.in);
@@ -443,7 +562,7 @@ public class mainFN {
 				index++;
 			}
 		}
-		
+
 		switch(index % 5) {
 		case 1:
 			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
@@ -470,12 +589,12 @@ public class mainFN {
 		default:
 			break;
 		}
-		
+
 		System.out.println("You need to make your own S-box.");
 		System.out.println("S-box is an ordered pair of alphabets for your encryption.");
 		System.out.println("Enter random alphabet string for your substitution.");
 		char[] Sbox = scanner.nextLine().toUpperCase().toCharArray();
-		
+
 		int boxsize = index / 5;
 		char converter1[] = new char[boxsize];
 		for(int i = 0; i < boxsize; i++) {
@@ -497,7 +616,7 @@ public class mainFN {
 		for(int i = 0; i < boxsize; i++) {
 			converter5[i] = reformedText[i + boxsize*4];
 		}
-		
+
 		for(int i = 0; i < boxsize; i++) {
 			converter1[i] = Sbox[(int)converter1[i] - 65];
 			converter2[i] = Sbox[(int)converter2[i] - 65];
@@ -505,7 +624,7 @@ public class mainFN {
 			converter4[i] = Sbox[(int)converter4[i] - 65];
 			converter5[i] = Sbox[(int)converter5[i] - 65];
 		}
-		
+
 		/*
 		for(int i = 0; i < boxsize; i++) {
 			System.out.print(converter1[i]);
@@ -515,8 +634,8 @@ public class mainFN {
 			System.out.print(converter5[i]);
 			System.out.println();
 		}
-		*/
-		
+		 */
+
 		int shiftingOrder[] = new int[5];
 		for (int i = 0; i < 5; i++) {
 			shiftingOrder[i] = (int)(Math.random()*5 + 1);
@@ -528,31 +647,4 @@ public class mainFN {
 			}
 		}
 	}
-	
-	//From this part, they are for permutation.
-	public static void perm(int[] arr, int pivot) { 
-		if(pivot == arr.length) { 
-			print(arr); return; 
-		} 
-		for(int i = pivot; i < arr.length; i++) { 
-			swap(arr, i, pivot); 
-			perm(arr, pivot + 1); 
-			swap(arr, i, pivot); 
-		} 
-	} 
-
-	public static void swap(int[] arr, int i, int j) { 
-		int temp = arr[i]; 
-		arr[i] = arr[j]; 
-		arr[j] = temp; 
-	} 
-
-	public static void print(int[] arr) { 
-		for(int i = 0; i < arr.length; i++) { 
-			if(i == arr.length - 1) 
-				System.out.println(arr[i]); 
-			else 
-				System.out.print(arr[i]); 
-		} 
-	} 
 }
