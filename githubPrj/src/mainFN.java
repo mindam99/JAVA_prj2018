@@ -60,7 +60,7 @@ public class mainFN {
 					System.out.println("1. Shift Cipher (Caesar Cipher)");
 					System.out.println("2. Substitution Cipher");
 					System.out.println("3. Vigenere Cipher (with key)");
-					System.out.println("4. Vigenere Cipher (helper)");
+					System.out.println("4. Vigenere Cipher (simple Kasiski Examination)");
 					System.out.println("5. Transposition Cipher (key cycle = 5)");
 					System.out.println();
 					
@@ -345,7 +345,10 @@ public class mainFN {
 	}
 	public static void Vig_DecHelper() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Input charaters");
+		System.out.println("This command is for simple Kasiski examination.");
+		System.out.println("Use it only when your ciphertext is long enough.");
+		System.out.println("Input your ciphertext.");
+		System.out.print(">> ");
 
 		char[] ciphertext = scanner.next().toUpperCase().toCharArray();
 		int len = ciphertext.length;
@@ -363,16 +366,117 @@ public class mainFN {
 		System.out.println("Please input a possible integer for key length.");
 		System.out.print(">> ");
 		int keylen = scanner.nextInt();
-
-		char charArray[][] = new char [keylen][];
-		int order = 0;
-		int mark = 0;
+		
+		int separate = reformedText.length / keylen;
+		int mark = reformedText.length % keylen;
+		int[] nums1 = new int[26];
+		double sum1 = 0;
+		int[] nums2 = new int[26];
+		double sum2 = 0;
+		
 		for(int i = 0; i < index; i++) {
-			charArray[i + mark][order] = reformedText[i];
-			if(i % keylen == 0 && i != 0) {
-				order++;
-				mark -= keylen;
+			if(i % keylen == 0) {
+				if((int) reformedText[i] == 'A') nums1[0]++;
+				else if((int) reformedText[i] == 'B') nums1[1]++;
+				else if((int) reformedText[i] == 'C') nums1[2]++;
+				else if((int) reformedText[i] == 'D') nums1[3]++;
+				else if((int) reformedText[i] == 'E') nums1[4]++;
+				else if((int) reformedText[i] == 'F') nums1[5]++;
+				else if((int) reformedText[i] == 'G') nums1[6]++;
+				else if((int) reformedText[i] == 'H') nums1[7]++;
+				else if((int) reformedText[i] == 'I') nums1[8]++;
+				else if((int) reformedText[i] == 'J') nums1[9]++;
+				else if((int) reformedText[i] == 'K') nums1[10]++;
+				else if((int) reformedText[i] == 'L') nums1[11]++;
+				else if((int) reformedText[i] == 'M') nums1[12]++;
+				else if((int) reformedText[i] == 'N') nums1[13]++;
+				else if((int) reformedText[i] == 'O') nums1[14]++;
+				else if((int) reformedText[i] == 'P') nums1[15]++;
+				else if((int) reformedText[i] == 'Q') nums1[16]++;
+				else if((int) reformedText[i] == 'R') nums1[17]++;
+				else if((int) reformedText[i] == 'S') nums1[18]++;
+				else if((int) reformedText[i] == 'T') nums1[19]++;
+				else if((int) reformedText[i] == 'U') nums1[20]++;
+				else if((int) reformedText[i] == 'V') nums1[21]++;
+				else if((int) reformedText[i] == 'W') nums1[22]++;
+				else if((int) reformedText[i] == 'X') nums1[23]++;
+				else if((int) reformedText[i] == 'Y') nums1[24]++;
+				else if((int) reformedText[i] == 'Z') nums1[25]++;
 			}
+		}
+		for(int i = 0; i < 26; i ++) {
+			if(nums1[i] > 1) {
+				nums1[i] = nums1[i]*(nums1[i] - 1);
+				sum1 += nums1[i];
+			}
+			else {
+				nums1[i] = 0;
+				sum1 += nums1[i];
+			}
+		}
+		if(mark != 0)
+		{
+			sum1 = (double)(sum1 / ((separate + 1) * separate));
+		}
+		else{
+			sum1 = (double)(sum1 / separate * (separate - 1));
+		}
+		
+		for(int i = 0; i < index; i++) {
+			if(i % keylen == 0) {
+				if((int) reformedText[i] == 'A') nums2[0]++;
+				else if((int) reformedText[i] == 'B') nums2[1]++;
+				else if((int) reformedText[i] == 'C') nums2[2]++;
+				else if((int) reformedText[i] == 'D') nums2[3]++;
+				else if((int) reformedText[i] == 'E') nums2[4]++;
+				else if((int) reformedText[i] == 'F') nums2[5]++;
+				else if((int) reformedText[i] == 'G') nums2[6]++;
+				else if((int) reformedText[i] == 'H') nums2[7]++;
+				else if((int) reformedText[i] == 'I') nums2[8]++;
+				else if((int) reformedText[i] == 'J') nums2[9]++;
+				else if((int) reformedText[i] == 'K') nums2[10]++;
+				else if((int) reformedText[i] == 'L') nums2[11]++;
+				else if((int) reformedText[i] == 'M') nums2[12]++;
+				else if((int) reformedText[i] == 'N') nums2[13]++;
+				else if((int) reformedText[i] == 'O') nums2[14]++;
+				else if((int) reformedText[i] == 'P') nums2[15]++;
+				else if((int) reformedText[i] == 'Q') nums2[16]++;
+				else if((int) reformedText[i] == 'R') nums2[17]++;
+				else if((int) reformedText[i] == 'S') nums2[18]++;
+				else if((int) reformedText[i] == 'T') nums2[19]++;
+				else if((int) reformedText[i] == 'U') nums2[20]++;
+				else if((int) reformedText[i] == 'V') nums2[21]++;
+				else if((int) reformedText[i] == 'W') nums2[22]++;
+				else if((int) reformedText[i] == 'X') nums2[23]++;
+				else if((int) reformedText[i] == 'Y') nums2[24]++;
+				else if((int) reformedText[i] == 'Z') nums2[25]++;
+			}
+		}
+
+		for(int i = 0; i < 26; i ++) {
+			if(nums2[i] > 1) {
+				nums2[i] = nums2[i]*(nums2[i] - 1);
+				sum2 += nums2[i];
+			}
+			else {
+				nums2[i] = 0;
+				sum2 += nums2[i];
+			}
+		}
+		if(mark != 0)
+		{
+			sum2 = (double)(sum2 / ((separate + 1) * separate));
+		}
+		else{
+			sum2 = (double)(sum2 / separate * (separate - 1));
+		}
+		
+		double sum = (sum1 + sum2) / 2;
+		if(sum >= 0.06) {
+			System.out.println(keylen + " is appropriate key length for this ciphertext.");
+		}
+		else if (sum <= 0.04) {
+			System.out.println(keylen + " is inappropriate key length for this ciphertext.");
 		}
 	}
 	public static void Vig_Dec_Key() {
