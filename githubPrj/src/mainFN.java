@@ -26,7 +26,6 @@ public class mainFN {
 					System.out.println("2. Substitution Cipher");
 					System.out.println("3. Vigenere Cipher");
 					System.out.println("4. Transposition Cipher (key cycle = 5)");
-					System.out.println("5. Block Cipher (SPN structure)");
 					System.out.println();
 					
 					System.out.print(">> ");
@@ -49,10 +48,6 @@ public class mainFN {
 						Trans_Enc();
 						System.out.println();
 						break;
-					case 5:
-						BlockSPN_Enc();
-						System.out.println();
-						break;
 					default:
 						System.out.println("Error!");
 						System.out.println("Please select the function again.");
@@ -64,8 +59,9 @@ public class mainFN {
 					
 					System.out.println("1. Shift Cipher (Caesar Cipher)");
 					System.out.println("2. Substitution Cipher");
-					System.out.println("3. Vigenere Cipher");
-					System.out.println("4. Transposition Cipher (key cycle = 5)");
+					System.out.println("3. Vigenere Cipher (with key)");
+					System.out.println("4. Vigenere Cipher (helper)");
+					System.out.println("5. Transposition Cipher (key cycle = 5)");
 					System.out.println();
 					
 					System.out.print(">> ");
@@ -81,10 +77,14 @@ public class mainFN {
 						System.out.println();
 						break;
 					case 3:
-						Vig_DecHelper();
+						Vig_Dec_Key();
 						System.out.println();
 						break;
 					case 4:
+						Vig_DecHelper();
+						System.out.println();
+						break;
+					case 5:
 						Trans_Dec();
 						System.out.println();
 						break;
@@ -365,8 +365,58 @@ public class mainFN {
 		int keylen = scanner.nextInt();
 
 		char charArray[][] = new char [keylen][];
-		
-		
+		int order = 0;
+		int mark = 0;
+		for(int i = 0; i < index; i++) {
+			charArray[i + mark][order] = reformedText[i];
+			if(i % keylen == 0 && i != 0) {
+				order++;
+				mark -= keylen;
+			}
+		}
+	}
+	public static void Vig_Dec_Key() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Which words / sentences do you want to decrypt?");
+		System.out.print(">> ");
+
+		String plaintext = scanner.nextLine();
+		plaintext = plaintext.toUpperCase();
+		int len = plaintext.length();
+		char text[] = plaintext.toCharArray();
+		char reformedText[] = new char[len];
+
+		int index = 0;
+		for(int i = 0; i < len; i++) {
+			if(65 <= (int)text[i] && (int)text[i] <= 90) {
+				reformedText[index] = text[i];
+				index++;
+			}
+		}
+
+		System.out.print("Key >> ");
+		char[] keyword = scanner.nextLine().toUpperCase().toCharArray();
+		int keysize = keyword.length;
+		int[] keyarr = new int[keyword.length];
+
+		for(int i = 0; i < keyarr.length; i++) {
+			keyarr[i] = (int) keyword[i] - 'A';
+		}
+
+		for(int i = 0; i < index; i++) {
+			int shift = keyarr[i % keyarr.length];
+			if((int) reformedText[i] - shift >= 65) {
+				reformedText[i] = (char) ((int) reformedText[i] - shift);
+			}
+			else if ((int) reformedText[i] - shift < 65) {
+				reformedText[i] = (char) ('Z' - (65 - (int) reformedText[i] + shift - 1));
+			}
+		}
+
+		for(int i = 0; i < index; i++) {
+			System.out.print(reformedText[i]);
+		}
+		System.out.println();
 	}
 	public static void Trans_Enc() {
 		Scanner scanner = new Scanner(System.in);
@@ -542,109 +592,6 @@ public class mainFN {
 
 			}
 			System.out.println();
-		}
-	}
-	public static void BlockSPN_Enc() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Which words / sentences do you want to encrypt?");
-		System.out.print(">> ");
-
-		String plaintext = scanner.nextLine();
-		plaintext = plaintext.toUpperCase();
-		int len = plaintext.length();
-		char text[] = plaintext.toCharArray();
-		char reformedText[] = new char[len / 5 * 5 + (len % 5 == 0 ? 0 : 5)];
-
-		int index = 0;
-		for(int i = 0; i < len; i++) {
-			if(65 <= (int)text[i] && (int)text[i] <= 90) {
-				reformedText[index] = text[i];
-				index++;
-			}
-		}
-
-		switch(index % 5) {
-		case 1:
-			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 2] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 3] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			index += 4;
-			break;
-		case 2:
-			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 2] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			index += 3;
-			break;
-		case 3:
-			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			reformedText[index + 1] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			index += 2;
-			break;
-		case 4:
-			reformedText[index] = (char)((int)(Math.random()*(90 - 65 + 1)) + 65);
-			index += 1;
-			break;
-		default:
-			break;
-		}
-
-		System.out.println("You need to make your own S-box.");
-		System.out.println("S-box is an ordered pair of alphabets for your encryption.");
-		System.out.println("Enter random alphabet string for your substitution.");
-		char[] Sbox = scanner.nextLine().toUpperCase().toCharArray();
-
-		int boxsize = index / 5;
-		char converter1[] = new char[boxsize];
-		for(int i = 0; i < boxsize; i++) {
-			converter1[i] = reformedText[i];
-		}
-		char converter2[] = new char[boxsize];
-		for(int i = 0; i < boxsize; i++) {
-			converter2[i] = reformedText[i + boxsize];
-		}
-		char converter3[] = new char[boxsize];
-		for(int i = 0; i < boxsize; i++) {
-			converter3[i] = reformedText[i + boxsize*2];
-		}
-		char converter4[] = new char[boxsize];
-		for(int i = 0; i < boxsize; i++) {
-			converter4[i] = reformedText[i + boxsize*3];
-		}
-		char converter5[] = new char[boxsize];
-		for(int i = 0; i < boxsize; i++) {
-			converter5[i] = reformedText[i + boxsize*4];
-		}
-
-		for(int i = 0; i < boxsize; i++) {
-			converter1[i] = Sbox[(int)converter1[i] - 65];
-			converter2[i] = Sbox[(int)converter2[i] - 65];
-			converter3[i] = Sbox[(int)converter3[i] - 65];
-			converter4[i] = Sbox[(int)converter4[i] - 65];
-			converter5[i] = Sbox[(int)converter5[i] - 65];
-		}
-
-		/*
-		for(int i = 0; i < boxsize; i++) {
-			System.out.print(converter1[i]);
-			System.out.print(converter2[i]);
-			System.out.print(converter3[i]);
-			System.out.print(converter4[i]);
-			System.out.print(converter5[i]);
-			System.out.println();
-		}
-		 */
-
-		int shiftingOrder[] = new int[5];
-		for (int i = 0; i < 5; i++) {
-			shiftingOrder[i] = (int)(Math.random()*5 + 1);
-			for(int j = 0; j < i; j++) {
-				if(shiftingOrder[i] == shiftingOrder[j]) {
-					i--;
-					break;
-				}
-			}
 		}
 	}
 }
