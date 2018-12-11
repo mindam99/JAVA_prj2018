@@ -472,10 +472,10 @@ public class mainFN {
 		}
 		
 		double sum = (sum1 + sum2) / 2;
-		if(sum >= 0.06) {
+		if(sum >= 0.055) {
 			System.out.println(keylen + " is appropriate key length for this ciphertext.");
 		}
-		else if (sum <= 0.04) {
+		else if (sum <= 0.055) {
 			System.out.println(keylen + " is inappropriate key length for this ciphertext.");
 		}
 	}
